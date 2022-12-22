@@ -30,8 +30,8 @@ const getAndValidateArgs = (): Args => {
     preRelease: JSON.parse(core.getInput('prerelease', {required: true})),
     releaseTitle: core.getInput('title', {required: false}),
     removeExistReleaseTag: JSON.parse(core.getInput('delete_exist_tag', {required: false})),
-    noReleasePage: JSON.parse(core.getInput('no_release_page',{required: false})),
-    createReleaseTag: JSON.parse(core.getInput('create_release_tag',{required: false})),
+    noReleasePage: JSON.parse(core.getInput('no_release_page', {required: false})),
+    createReleaseTag: JSON.parse(core.getInput('create_release_tag', {required: false})),
     files: [] as string[],
   };
 
@@ -55,7 +55,7 @@ const createReleaseTag = async (client: github.GitHub, refInfo: Octokit.GitCreat
     core.info(
       `Could not create new tag "${refInfo.ref}" (${err.message}) therefore updating existing tag "${existingTag}"`,
     );
-    if(existingTag === 'tags/latest') {
+    if (existingTag === 'tags/latest') {
       await client.git.updateRef({
         ...refInfo,
         ref: existingTag,
@@ -309,26 +309,25 @@ export const main = async (): Promise<void> => {
           tag: args.automaticReleaseTag,
         });
       }
-    }
-    else {
+    } else {
       core.info('will not create Release Tag');
     }
-    
-    let releaseUploadUrl = 'noUrl';
-    
-    if(!args.noReleasePage) {
-    releaseUploadUrl = await generateNewGitHubRelease(client, {
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      tag_name: releaseTag,
-      name: args.releaseTitle ? args.releaseTitle : releaseTag,
-      draft: args.draftRelease,
-      prerelease: args.preRelease,
-      body: changelog,
-    });
 
-    await uploadReleaseArtifacts(client, releaseUploadUrl, args.files);
-  }
+    let releaseUploadUrl = 'noUrl';
+
+    if (!args.noReleasePage) {
+      releaseUploadUrl = await generateNewGitHubRelease(client, {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        tag_name: releaseTag,
+        name: args.releaseTitle ? args.releaseTitle : releaseTag,
+        draft: args.draftRelease,
+        prerelease: args.preRelease,
+        body: changelog,
+      });
+
+      await uploadReleaseArtifacts(client, releaseUploadUrl, args.files);
+    }
     core.debug(`Exporting environment variable AUTOMATIC_RELEASES_TAG with value ${releaseTag}`);
     core.exportVariable('AUTOMATIC_RELEASES_TAG', releaseTag);
     core.setOutput('automatic_releases_tag', releaseTag);

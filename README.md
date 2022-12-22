@@ -1,17 +1,19 @@
-# GitHub Automatic Releases
+# Action Release Auto
 
 This action simplifies the GitHub release process by automatically uploading assets, generating changelogs, handling pre-releases, and so on.
+
+---
+
+> **This is an fork of [marvinpinto/actions](https://github.com/marvinpinto/actions) I added my some Stuff what I think i miss**
+
+---
 
 ## Contents
 
 1. [Usage Examples](#usage-examples)
 1. [Supported Parameters](#supported-parameters)
 1. [Event Triggers](#event-triggers)
-1. [Versioning](#versioning)
-1. [How to get help](#how-to-get-help)
 1. [License](#license)
-
-> **NOTE**: The `marvinpinto/action-automatic-releases` repository is an automatically generated mirror of the [marvinpinto/actions](https://github.com/marvinpinto/actions) monorepo containing this and other actions. Please file issues and pull requests over there.
 
 ## Usage Examples
 
@@ -25,8 +27,6 @@ This example workflow will kick in as soon as changes land on `master`. After ru
 1. Update this new release with the specified title (e.g. `Development Build`).
 1. Upload `LICENSE.txt` and any `jar` files as release assets.
 1. Mark this release as a `pre-release`.
-
-You can see a working example of this workflow over at [marvinpinto/actions](https://github.com/marvinpinto/actions/releases/tag/latest).
 
 ```yaml
 ---
@@ -66,8 +66,6 @@ Similar to the previous example, this workflow will kick in as soon as new tags 
 1. Generate a changelog from all the commits between this and the previous [semver-looking](https://semver.org/) tag.
 1. Generate a new release and associate it with this tag.
 1. Upload `LICENSE.txt` and any `jar` files as release assets.
-
-Once again there's an example of this over at [marvinpinto/actions](https://github.com/marvinpinto/actions/releases/latest).
 
 ```yaml
 ---
@@ -109,6 +107,9 @@ jobs:
 | `delete_exist_tag`      | Delete exist Tag                                           | `true`   |
 | `title`                 | Release title; defaults to the tag name if none specified. | Tag Name |
 | `files`                 | Files to upload as part of the release assets.             | `null`   |
+| `delete_exist_tag`      | Should exist Tag delete or not                             | `true`   |
+| `no_release_page`       | Don't push an Release Page                                 | `false`  |
+| `create_release_tag`    | Will Tag Current Commit                                    | `true`   |
 
 ## Outputs
 
@@ -133,12 +134,12 @@ The GitHub Actions framework allows you to trigger this (and other) actions on _
 Every commit that lands on master for this project triggers an automatic build as well as a tagged release called `latest`. If you don't wish to live on the bleeding edge you may use a stable release instead. See [releases](../../releases/latest) for the available versions.
 
 ```yaml
-- uses: "marvinpinto/action-automatic-releases@<VERSION>"
+- uses: "unl0ck/action-release-auto@<VERSION>"
 ```
 
 ## How to get help
 
-The main [README](https://github.com/marvinpinto/actions/blob/master/README.md) for this project has a bunch of information related to debugging & submitting issues. If you're still stuck, try and get a hold of me on [keybase](https://keybase.io/marvinpinto) and I will do my best to help you out.
+The main [README](https://github.com/unl0ck/action-release-auto/blob/master/README.md) for this project has a bunch of information related to debugging & submitting issues.
 
 ## License
 
