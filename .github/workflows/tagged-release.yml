@@ -9,15 +9,10 @@ on:
 jobs:
   gh_tagged_release:
     runs-on: "ubuntu-latest"
-    env:
-      JEST_VERBOSE: ${{ secrets.JEST_VERBOSE }}
 
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v3"
-        with:
-          lfs: true
-          fetch-depth: 0
 
       - id: "yarn-cache"
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
@@ -29,9 +24,8 @@ jobs:
       - run: "yarn install --frozen-lockfile"
       - run: "yarn lint"
       - run: "yarn build"
-      - run: "yarn jest --env=node --colors --forceExit"
 
-      - uses: "./"
+      - uses: ./
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
